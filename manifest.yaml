@@ -1,0 +1,25 @@
+version: 1
+stages:
+  - name: build
+    type: stages
+    weight: 1
+    spec:
+      stages:
+        - name: build
+          type: ec2
+          weight: 1
+        - name: test
+          type: k8s
+          weight: 2
+  - name: test2
+    type: k8s
+    weight: 1
+    spec:
+      secrets:
+        - name: mysecret
+          type: vault
+          title: MYSECRET
+      artifacts:
+        - name: myjar
+          type: jar
+          location: /va/java/my.jar
